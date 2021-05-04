@@ -43,7 +43,7 @@ microphone mymicrophone(p16);
 int hueToRGB(float h);
 void float2LED(float value)
 {
-    float fnumLED = abs((value - 0.5)/3.3)*100; // can mess with this scaling for better LED output
+    float fnumLED = abs((value - 0.5)/3.3)*100; // adjust for LED
     int numLED = (int)fnumLED;
     if (numLED > 8) numLED = 8;
     
@@ -71,7 +71,7 @@ void float2LED(float value)
         x = 0;
 }
 
-// same thing but for the mic
+// also for the microphone
 void mic2LED(int mic){
     static float dh = 360.0 / 5;
     static float x = 0;
@@ -100,23 +100,21 @@ void mic2LED(int mic){
 }
 
 unsigned short max_range = 0xFFFF;
-// function that calls above functions
+// call above function
 {
     //for(int i = 0; i < 60; i++){
         float sample;
-        float average = 0.67/3.3;//initial DC bias level
+        float average = 0.67/3.3;//initial DC bias
         
         int buffer[20];
         
         while(1){
             if (src) {
-            // this part works for DAC PCM output //
             float test = (float)waver.dac_data/max_range;
             pc.printf("--%f", abs((test - 0.5)/3.3));
             float2LED(test);
             array.write();
             }
-            //------------------------------------//
             else {
             //microphone setup //
             int centervalue;
@@ -153,7 +151,7 @@ int main()
     
     float bright = 0.2; // 20% brightness for the LED Array 
 
-    array.setBrightness(bright);    // set brightness to default 0.2
+    array.setBrightness(bright);    // ^^ default
     array.clear();
 
     while (true)
@@ -231,17 +229,10 @@ int main()
                 array.write();
                 wait_ms(100);
                 }
-                        // Shrink and grow rectangle
+                        // Shrink rectangle to close out program
         for(int i=0; i<4; i++){
             array.clear();
             array.drawFilledRect(0,i,i,7-i,7-i,rand()%255,rand()%255,rand()%255);
-            array.write();
-            wait_ms(250);
-            }
-        for(int i=0; i<4; i++){
-            array.clear();
-            //array.drawRect(0,3-i,3-i,4+i,4+i,Blue);
-            array.drawFilledRect(0,3-i,3-i,4+i,4+i,rand()%255,rand()%255,rand()%255);
             array.write();
             wait_ms(250);
             }
