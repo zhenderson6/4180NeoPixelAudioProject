@@ -8,3 +8,5 @@ The other designs are an intilization, so that the code can be seen functioning 
 I have attached the link to the playlist for my two videos, incase the links uploaded to the microsoft form didn't work 
 https://youtube.com/playlist?list=PLUUDE2NQYsOKR7lrn688QMnsr7weKl2Ow
 
+The beginning of the code starts by displaying my name in scrolling letters, and loops in the audio visualizer.
+After the code is implemented, the message " T H A N K S" is displayed, and then closes out in a decreasing rectangle.
